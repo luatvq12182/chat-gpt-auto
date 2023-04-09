@@ -8,8 +8,8 @@ const converter = new showdown.Converter();
 import httpClient from "./services/httpClient";
 import Spinner from "./components/Spinner";
 import CopyButton from "./components/CopyButton";
-import Pagination from "./components/Pagination";
-import usePagination from "./hooks/usePagination";
+// import Pagination from "./components/Pagination";
+// import usePagination from "./hooks/usePagination";
 
 const App = () => {
     const progressId = useRef(null);
@@ -18,7 +18,7 @@ const App = () => {
     const [isHandling, setIsHandling] = useState(false);
     const [dataTable, setDataTable] = useState([]);
 
-    const { page, pageSize, onChange } = usePagination();
+    // const { page, pageSize, onChange } = usePagination();
 
     const notify = () => toast("Copied!");
 
@@ -34,7 +34,7 @@ const App = () => {
 
         readXlsxFile(files[0]).then((rows) => {
             httpClient
-                .post("http://localhost:3001/api/keywords", {
+                .post("/api/keywords", {
                     keywords: rows.flat(Infinity),
                 })
                 .then(({ data, id }) => {
