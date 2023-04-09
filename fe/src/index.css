@@ -1,0 +1,28 @@
+.hover {
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.hover:hover {
+    opacity: 0.5;
+}
+
+.btn-clipboard {
+    position: absolute;
+    top: 0.65rem;
+    right: 0.65rem;
+    z-index: 10;
+    display: block;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.65em;
+    color: #0d6efd;
+    background-color: #fff;
+    border: 1px solid;
+    border-radius: 0.25rem;
+}
+
+.btn-clipboard:hover,
+.btn-clipboard:focus {
+    color: #fff;
+    background-color: #0d6efd;
+}
