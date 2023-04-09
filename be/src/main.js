@@ -6,7 +6,7 @@ const sendChat = require("./api");
 
 const app = express();
 app.use(express.json());
-app.use(express.static("public"));
+app.use(express.static("dist"));
 
 if (Config.MODE === "development") {
     app.use(cors());

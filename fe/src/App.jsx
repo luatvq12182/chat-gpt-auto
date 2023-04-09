@@ -12,6 +12,7 @@ import Pagination from "./components/Pagination";
 import usePagination from "./hooks/usePagination";
 
 const App = () => {
+    const progressId = useRef(null);
     const ipFile = useRef(null);
     const timeId = useRef(null);
     const [isHandling, setIsHandling] = useState(false);
@@ -33,11 +34,12 @@ const App = () => {
 
         readXlsxFile(files[0]).then((rows) => {
             httpClient
-                .post("/api/keywords", {
+                .post("http://localhost:3001/api/keywords", {
                     keywords: rows.flat(Infinity),
                 })
-                .then((data) => {
+                .then(({ data, id }) => {
                     setDataTable(data);
+                    progressId.current = id;
 
                     performCheck();
                 });
@@ -60,16 +62,28 @@ const App = () => {
     const performCheck = () => {
         timeId.current = setInterval(() => {
             httpClient
-                .get("/api/getCurrentProgress")
+                .get("/api/getProgress/" + progressId.current)
                 .then((data) => {
                     setDataTable(data);
 
                     if (data.every((item) => item.isDone)) {
                         clearInterval(timeId.current);
                         setIsHandling(false);
+
+                        setTimeout(() => {
+                            clearData();
+                        }, 10000);
                     }
                 });
         }, 5000);
+    };
+
+    const clearData = () => {
+        httpClient
+            .get("/api/stopProgress/" + progressId.current)
+            .then((data) => {
+                console.log("Is clear: ", data);
+            });
     };
 
     return (
